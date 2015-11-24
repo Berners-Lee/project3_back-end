@@ -1,3 +1,6 @@
+'use strict'
+var db = require('./lib/db');
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -7,6 +10,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
 
 var app = express();
 
