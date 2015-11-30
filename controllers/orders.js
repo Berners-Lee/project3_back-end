@@ -6,11 +6,12 @@ module.exports = {
             res.sendStatus(405);
     },
     root : {
-        get : function(req, res) {
-            res.json({
-                // passport will stick on req, and if user exists, user is logged in, if not, user is not logged in
-                shoppingHistory : req.orders || 'No Order'
-            });
+        get : function index(req, res, next) {
+          Order.find({}).exec().then(function(orders) {
+            res.json(orders);
+          }).catch(function(error) {
+            next(error);
+          });
         }
     }
     // login : {
