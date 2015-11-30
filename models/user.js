@@ -13,7 +13,6 @@ var userSchema = new mongoose.Schema({
   },
   passwordDigest: {
     type: String,
-    unique: true,
     required: true
   }
 });
