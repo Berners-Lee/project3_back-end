@@ -7,4 +7,4 @@ mongoose.model('User', require('./User'));
 
 mongoose.connect("mongodb://localhost/nozama-db");
 
-module.exports = mongoose;
+module.exports = mongoose.connection;

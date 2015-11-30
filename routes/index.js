@@ -25,4 +25,7 @@ router.route('/signup').
   get(authCtrl.deny).
   post(authCtrl.signup.post);
 
+router.route('/destroy').
+  delete(authCtrl.destroy.delete);
+
 module.exports = router;

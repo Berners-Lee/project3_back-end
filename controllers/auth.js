@@ -2,6 +2,7 @@
 
 var passport = require('passport');
 var User = require('../models').model('User');
+var db = require('../models/index');
 
 module.exports = {
     deny : function(req, res) {
@@ -75,6 +76,15 @@ module.exports = {
                 res.sendStatus(200);
             }).catch(function(err) {
                 next(err);
+            });
+        }
+    },
+    destroy : {
+        delete : function(req, res, next) {
+            req.user.remove({"userName":req.user.userName}, function(err, docs) {
+                if (err) return next(err);
+                req.logout();
+                res.send(docs); // see results
             });
         }
     }
