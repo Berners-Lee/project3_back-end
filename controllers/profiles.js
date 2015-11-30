@@ -7,7 +7,7 @@ module.exports = {
     },
     root : {
         get : function (req, res, next) {
-          Profile.find({}).exec().then(function(profiles) {
+          Profile.find({user_ObjectId: req.user._id}).exec().then(function(profiles) {
             res.json(profiles);
           }).catch(function(error) {
             next(error);
@@ -18,7 +18,7 @@ module.exports = {
         post : function(req, res, next) {
             var pProfile = new Promise(function(res, rej) {
                 Profile.create({
-                    user_ObjectId : req.body.user_ObjectId,
+                    user_ObjectId : req.user._id,
                     currentCart : req.body.currentCart,
                     shoppingHistory : req.body.shoppingHistory
                 }, function(err, profile) {
@@ -39,7 +39,7 @@ module.exports = {
                 next(err);
             });
         }
-    }
+    },
     // login : {
     //     post : passport.authenticate('local'),
     //     all : function(req, res) {
@@ -103,13 +103,12 @@ module.exports = {
     //         });
     //     }
     // },
-    // destroy : {
-    //     delete : function(req, res, next) {
-    //         req.user.remove({"userName":req.user.userName}, function(err, docs) {
-    //             if (err) return next(err);
-    //             req.logout();
-    //             res.send(docs); // see results
-    //         });
-    //     }
-    // }
+    destroy : {
+        delete : function(req, res, next) {
+            Profile.remove({user_ObjectId: req.user._id}, function(err, docs) {
+                if (err) return next(err);
+                res.send(docs); // see results
+            });
+        }
+    }
 };

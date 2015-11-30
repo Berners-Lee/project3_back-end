@@ -5,6 +5,7 @@ var profiles = require('../controllers/profiles');
 /* GET home page. */
 router.get('/', profiles.root.get);
 router.post('/', profiles.create.post);
+router.delete('/', profiles.destroy.delete);
 
 /**AUTH ROUTES
  *  a login route using `passport.authenticate`
