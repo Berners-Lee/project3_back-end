@@ -13,6 +13,32 @@ module.exports = {
             next(error);
           });
         }
+    },
+    create : {
+        post : function(req, res, next) {
+            var pOrder = new Promise(function(res, rej) {
+                Order.create({
+                    profile_ObjectId : req.body.profile_ObjectId,
+                    product_ObjectId : req.body.product_ObjectId
+
+                }, function(err, order) {
+                    if(err) {
+                        rej(err);
+                        return;
+                    }
+
+                    res(order);
+
+                });
+            });
+            pOrder.then(function() {
+                res.sendStatus(200);
+                res.send('Created');
+                return this.save();
+            }).catch(function(err) {
+                next(err);
+            });
+        }
     }
     // login : {
     //     post : passport.authenticate('local'),

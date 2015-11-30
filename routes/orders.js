@@ -4,6 +4,8 @@ var orders = require('../controllers/orders');
 
 /* GET home page. */
 router.get('/', orders.root.get);
+router.post('/', orders.create.post);
+
 
 /**AUTH ROUTES
  *  a login route using `passport.authenticate`
