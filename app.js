@@ -40,7 +40,7 @@ app.use(session({
     url : "mongodb://localhost/nozama-sessions"
   }),
   cookie : {
-    maxAge : 1800000 // 5 minutes
+    maxAge : 1800000 // 30 minutes
   },
   genid : function() {
     return uuid.v4({
