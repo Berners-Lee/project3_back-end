@@ -18,7 +18,9 @@ module.exports = {
         post : function(req, res, next) {
             var pProfile = new Promise(function(res, rej) {
                 Profile.create({
-                    user_ObjectId : req.body.user_ObjectId
+                    user_ObjectId : req.body.user_ObjectId,
+                    currentCart : req.body.currentCart,
+                    shoppingHistory : req.body.shoppingHistory
                 }, function(err, profile) {
                     if(err) {
                         rej(err);
