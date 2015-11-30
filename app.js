@@ -7,10 +7,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var uuid = require('uuid');
+var MongoStore = require('connect-mongo')(session);
+
+var passport = require('./lib/passport');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
 
 var app = express();
 
@@ -22,9 +26,29 @@ app.set('view engine', 'hbs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret : process.env.SESSION_SECRET,
+  resave : false,
+  saveUninitialized : false,
+  store : new MongoStore({
+    url : "mongodb://localhost/nozama-sessions"
+  }),
+  cookie : {
+    maxAge : 1800000 // 5 minutes
+  },
+  genid : function() {
+    return uuid.v4({
+      rng : uuid.nodeRNG
+    });
+  }
+}));
+
+app.use(passport.initialize());
+
+app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
