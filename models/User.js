@@ -12,8 +12,7 @@ var userSchema = new mongoose.Schema({
     unique: true
   },
   passwordDigest: {
-    type: String,
-    required: true
+    type: String
   }
 });
 
@@ -67,5 +66,6 @@ userSchema.methods.setPassword = function(password) {
 
   return returnedPromise;
 };
+
 
 module.exports = userSchema;
