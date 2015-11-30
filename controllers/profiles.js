@@ -6,20 +6,19 @@ module.exports = {
             res.sendStatus(405);
     },
     root : {
-        get : function(req, res) {
-            res.json({
-                // passport will stick on req, and if user exists, user is logged in, if not, user is not logged in
-                shoppingHistory : Profile.find({}) || 'No Profile'
-            });
+        get : function (req, res, next) {
+          Profile.find({}).exec().then(function(profiles) {
+            res.json(profiles);
+          }).catch(function(error) {
+            next(error);
+          });
         }
     },
     create : {
-        post : function(req, res) {
-            res.send('Created');
-
+        post : function(req, res, next) {
             var pProfile = new Promise(function(res, rej) {
                 Profile.create({
-                    profile : req.body.profile
+                    user_ObjectId : req.body.user_ObjectId
                 }, function(err, profile) {
                     if(err) {
                         rej(err);
@@ -27,10 +26,13 @@ module.exports = {
                     }
 
                     res(profile);
+
                 });
             });
             pProfile.then(function() {
                 res.sendStatus(200);
+                res.send('Created');
+                return this.save();
             }).catch(function(err) {
                 next(err);
             });
