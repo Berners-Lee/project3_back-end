@@ -5,6 +5,7 @@ mongoose.Promise = Promise;
 
 mongoose.model('User', require('./User'));
 mongoose.model('Order', require('./Order'));
+mongoose.model('Profile', require('./Profile'));
 
 mongoose.connect("mongodb://localhost/nozama-db");
 

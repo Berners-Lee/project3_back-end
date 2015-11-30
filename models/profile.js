@@ -9,10 +9,10 @@ var profileSchema = new mongoose.Schema({
     unique: true
   },
   currentCart: {
-    type: Arrays
+    type: Array
   },
   shoppingHistory: {
-    type: Arrays
+    type: Array
   }
 });
 
