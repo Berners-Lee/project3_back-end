@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var uuid = require('uuid');
 var MongoStore = require('connect-mongo')(session);
+process.env.SESSION_SECRET || require('dotenv').load();
 
 var passport = require('./lib/passport');
 
