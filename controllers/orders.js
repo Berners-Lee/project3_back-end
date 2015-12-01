@@ -24,10 +24,16 @@ module.exports = {
             var currentProfileId;
             Profile.find({user_ObjectId: req.user._id}).exec().then(function(profile) {
                 currentProfileId = profile[0]._id;
+                cart = profile[0].cart;
+                profile[0].cart = [];
+                profile[0].save(function(err){
+                    if (err) return next(err);
+                    res.send('added');
+                });
                 var pOrder = new Promise(function(res, rej) {
                     Order.create({
                         profile_ObjectId : currentProfileId,
-                        product_ObjectId : [req.body.product_ObjectId]
+                        product_ObjectId : cart
                     }, function(err, order) {
                         if(err) {
                             rej(err);
