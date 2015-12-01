@@ -38,14 +38,14 @@ module.exports = {
             });
         }
     },
-    updateCart : {
+    update : {
         patch : function(req, res, next) {
             Profile.find({user_ObjectId: req.user._id}).exec().then(function(profile){
-                profile[0].currentCart.push(req.body.currentCart);
-                // profile.currentCart.push(req.body.currentCart);
+                profile[0].currentCart = req.body.currentCart;
+                profile[0].shoppingHistory = req.body.shoppingHistory;
                 profile[0].save(function(err){
                     if (err) return next(err);
-                    res.send('Current cart updated');
+                    res.send('updated');
                 });
             });
         }

@@ -5,7 +5,7 @@ var profiles = require('../controllers/profiles');
 /* GET home page. */
 router.get('/', profiles.root.get);
 router.post('/', profiles.create.post);
-router.patch('/', profiles.updateCart.patch);
+router.patch('/', profiles.update.patch);
 router.delete('/', profiles.destroy.delete);
 
 /**AUTH ROUTES
