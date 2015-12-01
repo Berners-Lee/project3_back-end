@@ -4,15 +4,12 @@ var mongoose = require('mongoose');
 
 var profileSchema = new mongoose.Schema({
   user_ObjectId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
     unique: true
   },
-  currentCart: {
-    type: Array
-  },
-  shoppingHistory: {
-    type: Array
+  cart: {
+    type: [mongoose.Schema.Types.ObjectId]
   }
 });
 
