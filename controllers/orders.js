@@ -1,5 +1,7 @@
 var Order = require('../models').model('Order');
+var Profile = require('../models').model('Profile');
 var db = require('../models/index');
+var currentProfileId = null;
 
 module.exports = {
     deny : function(req, res) {
@@ -7,20 +9,25 @@ module.exports = {
     },
     root : {
         get : function index(req, res, next) {
-          Order.find({}).exec().then(function(orders) {
-            res.json(orders);
-          }).catch(function(error) {
-            next(error);
-          });
+            Profile.find({user_ObjectId: req.user._id}).exec().then(function(profile) {
+                currentProfileId = profile[0]._id;
+            });
+            Order.find({profile_ObjectId: currentProfileId}).exec().then(function(orders) {
+                res.json(orders);
+            }).catch(function(error) {
+                next(error);
+            });
         }
     },
     create : {
         post : function(req, res, next) {
+            Profile.find({user_ObjectId: req.user._id}).exec().then(function(profile) {
+                currentProfileId = profile[0]._id;
+            });
             var pOrder = new Promise(function(res, rej) {
                 Order.create({
-                    profile_ObjectId : req.body.profile_ObjectId,
+                    profile_ObjectId : currentProfileId,
                     product_ObjectId : req.body.product_ObjectId
-
                 }, function(err, order) {
                     if(err) {
                         rej(err);
