@@ -10,6 +10,8 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var uuid = require('uuid');
 var MongoStore = require('connect-mongo')(session);
+var cors = require('cors');
+
 process.env.SESSION_SECRET || require('dotenv').load();
 
 var passport = require('./lib/passport');
@@ -24,6 +26,11 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+app.use(cors({
+  origin: ['http://localhost:5000'],
+  credentials: true
+}));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
