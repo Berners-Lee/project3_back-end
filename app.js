@@ -16,7 +16,6 @@ var passport = require('./lib/passport');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var orders = require('./routes/orders');
 var profiles = require('./routes/profiles');
 var products = require('./routes/products');
 
@@ -56,7 +55,6 @@ app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/orders', orders);
 app.use('/profiles', profiles);
 app.use('/products', products);
 
