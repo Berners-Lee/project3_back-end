@@ -7,8 +7,8 @@ module.exports = {
     },
     root : {
         get : function (req, res, next) {
-          Profile.find({user_ObjectId: req.user._id}).exec().then(function(profiles) {
-            res.json(profiles);
+          Profile.find({user_ObjectId: req.user._id}).exec().then(function(profile) {
+            res.json(profile);
           }).catch(function(error) {
             next(error);
           });
@@ -26,9 +26,7 @@ module.exports = {
                         rej(err);
                         return;
                     }
-
                     res(profile);
-
                 });
             });
             pProfile.then(function() {
@@ -40,74 +38,23 @@ module.exports = {
             });
         }
     },
-    // login : {
-    //     post : passport.authenticate('local'),
-    //     all : function(req, res) {
-    //         res.sendStatus(200);
-    //     }
-    // },
-    // logout : {
-    //     all : function(req, res, next) {
-    //         // if user is not logged in
-    //         if(!req.user) {
-    //             var err = new Error("Log in first.");
-    //             return next(err);
-    //         }
-
-    //         req.logout();
-    //         res.sendStatus(200);
-    //     }
-    // },
-    // changePassword : {
-    //     patch : function(req, res, next) {
-    //         // check that user is logged in
-    //         // check that body contains a password value
-    //         if(!req.body || !req.user || !req.body.password) {
-    //             var err = new Error("No password supplied.");
-    //             return next(err);
-    //         }
-    //         // bcrypt the password
-    //         req.user.setPassword(req.body.password).
-    //             then(function() {
-    //                 res.sendStatus(200);
-    //             }).catch(function(err) {
-    //                 next(err);
-    //             });
-    //     }
-    // },
-    // signup : {
-    //     post : function(req, res, next) {
-    //         if(!req.body || !req.body.username || !req.body.password) {
-    //             var err = new Error("No credentials.");
-    //             return next(err);
-    //         }
-
-    //         var pUser = new Promise(function(res, rej) {
-    //             User.create({
-    //                 userName : req.body.username
-    //             }, function(err, user) {
-    //                 if(err) {
-    //                     rej(err);
-    //                     return;
-    //                 }
-
-    //                 res(user);
-    //             });
-    //         });
-    //         pUser.then(function(user) {
-    //             return user.setPassword(req.body.password);
-    //         }).then(function() {
-    //             res.sendStatus(200);
-    //         }).catch(function(err) {
-    //             next(err);
-    //         });
-    //     }
-    // },
+    updateCart : {
+        patch : function(req, res, next) {
+            Profile.find({user_ObjectId: req.user._id}).exec().then(function(profile){
+                profile[0].currentCart.push(req.body.currentCart);
+                // profile.currentCart.push(req.body.currentCart);
+                profile[0].save(function(err){
+                    if (err) return next(err);
+                    res.send('Current cart updated');
+                });
+            });
+        }
+    },
     destroy : {
         delete : function(req, res, next) {
-            Profile.remove({user_ObjectId: req.user._id}, function(err, docs) {
+            Profile.remove({user_ObjectId: req.user._id}, function(err, profile) {
                 if (err) return next(err);
-                res.send(docs); // see results
+                res.send(profile); // see results
             });
         }
     }
