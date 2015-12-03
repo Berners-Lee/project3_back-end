@@ -36,6 +36,11 @@ var orderSchema = new mongoose.Schema({
     default: todaysDate(),
     required: true,
     ref: 'Date Purchased'
+  },
+  priceTotal: {
+    type: 'String',
+    required: true,
+    ref: 'Total Order Price'
   }
 });
 

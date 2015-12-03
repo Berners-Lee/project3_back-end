@@ -34,11 +34,12 @@ module.exports = {
                     res.redirect('back');
                     resolve(charge);
                 });
-            })).then(function() {
+            })).then(function(charge) {
                 var currentProfileId;
                 return Profile.find({user_ObjectId: req.user._id}).exec().then(function(profile) {
                     currentProfileId = profile[0]._id;
                     cart = profile[0].cart;
+                    amount = (Number(charge.amount)/100).toFixed(2);
                     profile[0].cart = [];
                     profile[0].save(function(err){
                         if (err) return next(err);
@@ -46,7 +47,8 @@ module.exports = {
                     var pOrder = new Promise(function(res, rej) {
                         Order.create({
                             profile_ObjectId : currentProfileId,
-                            product_ObjectId : cart
+                            product_ObjectId : cart,
+                            priceTotal : amount
                         }, function(err, order) {
                             if(err) {
                                 rej(err);
