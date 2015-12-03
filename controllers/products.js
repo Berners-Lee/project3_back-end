@@ -7,17 +7,33 @@ module.exports = {
     },
     root : {
         get : function index(req, res, next) {
-          var name = req.query.name;
-          var query = null;
-          if(!name) query = {}
-            else query = {"name": name};
-          console.log(query);
-          Product.find(query).exec().then(function(orders) {
-            res.json(orders);
-          }).catch(function(error) {
-            next(error);
-          });
-        }
+          var search = req.query.name;
+          var query = {};
+          var searchResult = [];
+          if(!search) {
+            Product.find(query).exec().then(function(product) {
+                  res.json(product);
+                }).catch(function(error) {
+                  next(error);
+            });
+          }
+          else {
+            Product.find({}).exec().then(function(products){
+              for(var i = 0; i<products.length; i++){
+                if (products[i].name.toLowerCase().replace(' ','').indexOf(search.toLowerCase()) > -1 ) {
+                  query = {"name": products[i].name};
+                  Product.find(query).exec().then(function(product) {
+                    searchResult.push(product[0]);
+                  }).then(function(){
+                    res.json(searchResult);
+                  }).catch(function(error) {
+                    console.error(error);
+                  });
+                } // end of if
+              }; // end of for loop
+            }); // end of product find
+          }; // end of else
+        }// end of get function
     },
     dorm : {
       get : function dorm(req, res, next) {
