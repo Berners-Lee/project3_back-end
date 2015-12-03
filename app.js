@@ -21,6 +21,7 @@ var users = require('./routes/users');
 var orders = require('./routes/orders');
 var profiles = require('./routes/profiles');
 var products = require('./routes/products');
+var stripeCharge = require('./routes/charges');
 
 var app = express();
 
@@ -66,6 +67,7 @@ app.use('/users', users);
 app.use('/orders', orders);
 app.use('/profiles', profiles);
 app.use('/products', products);
+app.use('/charges', stripeCharge);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
