@@ -23,9 +23,10 @@ module.exports = {
     },
     create : {
         post : function(req, res, next) {
+            console.log(req.body.amount);
             (new Promise(function(resolve, reject) {
                 stripe.charges.create({
-                    amount: 2000,
+                    amount: req.body.amount,
                     currency: 'usd',
                     source: req.body.stripeToken
                 }, function(err, charge){
