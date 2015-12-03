@@ -1,17 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var orders = require('../controllers/orders');
 var stripe = require('stripe')(process.env.STRIPE_SECRET);
 
-router.post('/', function(req, res, next){
-  stripe.charges.create({
-    amount: 2000,
-    currency: 'usd',
-    source: req.body.stripeToken
-  }, function(err, charge){
-    if(err) return next(err);
-    console.log("charged");
-    res.redirect('back');
-  });
-});
+router.post('/', orders.create.post);
 
 module.exports = router;
