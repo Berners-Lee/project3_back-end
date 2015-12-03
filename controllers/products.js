@@ -7,7 +7,12 @@ module.exports = {
     },
     root : {
         get : function index(req, res, next) {
-          Product.find({}).exec().then(function(orders) {
+          var name = req.query.name;
+          var query = null;
+          if(!name) query = {}
+            else query = {"name": name};
+          console.log(query);
+          Product.find(query).exec().then(function(orders) {
             res.json(orders);
           }).catch(function(error) {
             next(error);
