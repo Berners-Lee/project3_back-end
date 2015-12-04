@@ -20,7 +20,7 @@ module.exports = {
           else {
             Product.find({}).exec().then(function(products){
               for(var i = 0; i<products.length; i++){
-                if (products[i].name.toLowerCase().replace(' ','').indexOf(search.toLowerCase()) > -1 ) {
+                if (products[i].name.toLowerCase().indexOf(search.toLowerCase()) > -1 ) {
                   query = {"name": products[i].name};
                   Product.find(query).exec().then(function(product) {
                     searchResult.push(product[0]);
