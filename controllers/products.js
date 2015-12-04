@@ -9,7 +9,7 @@ module.exports = {
         get : function index(req, res, next) {
           var search = req.query.name;
           var query = {};
-          var searchResult = [];
+          var searchPromises = [];
           if(!search) {
             Product.find(query).exec().then(function(product) {
                   res.json(product);
@@ -20,17 +20,16 @@ module.exports = {
           else {
             Product.find({}).exec().then(function(products){
               for(var i = 0; i<products.length; i++){
-                if (products[i].name.toLowerCase().indexOf(search.toLowerCase()) > -1 ) {
+                if (products[i].name.toLowerCase().indexOf(search.toLowerCase()) > -1) {
                   query = {"name": products[i].name};
-                  Product.find(query).exec().then(function(product) {
-                    searchResult.push(product[0]);
-                  }).then(function(){
-                    res.json(searchResult);
-                  }).catch(function(error) {
-                    console.error(error);
-                  });
+                  searchPromises.push(Product.find(query).exec());
                 } // end of if
               }; // end of for loop
+              Promise.all(searchPromises).then(function(searchResult){
+                res.json(searchResult);
+              }).catch(function(error) {
+                console.error(error);
+              });
             }); // end of product find
           }; // end of else
         }// end of get function
