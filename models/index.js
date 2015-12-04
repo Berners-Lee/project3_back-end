@@ -8,6 +8,6 @@ mongoose.model('Order', require('./Order'));
 mongoose.model('Profile', require('./Profile'));
 mongoose.model('Product', require('./Product'));
 
-mongoose.connect("process.env.MONGOLAB_URI");
+mongoose.connect(process.env.MONGOLAB_URI);
 
 module.exports = mongoose.connection;
