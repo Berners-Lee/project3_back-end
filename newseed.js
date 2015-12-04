@@ -2,7 +2,7 @@
 var models = require('./models');
 var product = models.model('Product');
 
-product.remove({});
+product.remove();
 product.create({
     name: "Superman Bedding",
     price: "45.99",
