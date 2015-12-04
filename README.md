@@ -44,7 +44,7 @@ On the back end, we used:
 
 ### Other things you should know
 * [Deployed back-end] 
-* [Backend repo] 
+* [Frontend repo] 
 
 [Frontend repo]: <https://github.com/Berners-Lee/project3_front-end>
 [Deployed back-end]: <https://peaceful-plains-2243.herokuapp.com/>
