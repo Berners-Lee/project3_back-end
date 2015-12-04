@@ -13,6 +13,7 @@ var MongoStore = require('connect-mongo')(session);
 var cors = require('cors');
 
 process.env.SESSION_SECRET || require('dotenv').load();
+process.env.STRIPE_SECRET || require('dotenv').load();
 
 var passport = require('./lib/passport');
 
