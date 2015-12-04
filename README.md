@@ -2,14 +2,22 @@
 
 ### About
 
-Nozama (built by Team Berners-Lee: Dave, Meng, and Sarabrent), is an e-commerce site for the college-bound. We sell products in four categories: Dorm, School, Food, and Fun.
+Nozama, built by Team Berners-Lee: Dave, Meng, and Sarabrent, is an e-commerce site for the college-bound. We sell products in four categories: Dorm, School, Food, and Fun.
 
 On the back end, we used:
 
-- Javascript
-- jQuery
-- Ajax
-- HTML / CSS
+- Express
+- Node.js
+- Mongo DB
+- Mongoose
+- Passport
+- bcrypt
+- Body-Parser
+- Cookie-Parser
+- CORS
+- Morgan
+- Stripe
+- UUID
 
 ### Catalog of routes
 - router.post('/', orders.create.post);
