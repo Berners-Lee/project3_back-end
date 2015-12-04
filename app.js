@@ -47,7 +47,7 @@ app.use(session({
   resave : false,
   saveUninitialized : false,
   store : new MongoStore({
-    url : "mongodb://localhost/nozama-sessions"
+    url : "process.env.MONGOLAB_URI"
   }),
   cookie : {
     maxAge : 1800000 // 30 minutes
